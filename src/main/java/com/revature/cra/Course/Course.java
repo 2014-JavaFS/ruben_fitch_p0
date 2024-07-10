@@ -121,5 +121,10 @@ public class Course {
 
     // Custom Methods
     // TODO: More custom methods
-
+    public boolean isFull(){
+        if (numRegistered < capacity){
+            return true;
+        }
+        return false;
+    }
 }

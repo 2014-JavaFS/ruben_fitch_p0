@@ -65,6 +65,4 @@ public class MemberService implements Serviceable<Member> {
         }
         throw new DataNotFoundException("Member with ID not within Database");
     }
-
-
 }
