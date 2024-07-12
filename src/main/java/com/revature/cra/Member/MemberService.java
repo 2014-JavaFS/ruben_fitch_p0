@@ -18,6 +18,7 @@ public class MemberService implements Serviceable<Member> {
     @Override
     public Member create(Member newMember) throws InvalidInputException {
         memberList.add(newMember);
+        System.out.println(newMember);
         return newMember;
     }
 

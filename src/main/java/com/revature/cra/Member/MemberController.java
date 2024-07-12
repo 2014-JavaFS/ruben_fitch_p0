@@ -1,34 +1,32 @@
 package com.revature.cra.Member;
 
 import com.revature.cra.util.exceptions.InvalidInputException;
+import io.javalin.Javalin;
+import io.javalin.http.Context;
+import io.javalin.http.HttpStatus;
 
 import java.util.Scanner;
 
 public class MemberController {
-    private final Scanner scanner;
     private final MemberService memberService;
-    private int count = 0;
 
-    public MemberController(Scanner scanner, MemberService memberService) {
-        this.scanner = scanner;
+    public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
 
-    public void register() throws InvalidInputException {
-        System.out.println("Please enter your first name: ");
-        String firstName = scanner.next();
+    public void registerPaths(Javalin app){
+        app.post("/members",this::register);
+    }
 
-        System.out.println("Please enter your last name: ");
-        String lastName = scanner.next();
-
+    public void register(Context ctx) throws InvalidInputException {
+        // Request
+        Member member = ctx.bodyAsClass(Member.class);
         Member.MemberType memberType = Member.MemberType.valueOf("STUDENT");
-
-        System.out.println("Please enter your password: ");
-        String password = scanner.next();
-
-        Member member = new Member(count, firstName, lastName, memberType, password);
+        member.setType(memberType);
         memberService.create(member);
-        count++;
+        // Responses
+        ctx.status(HttpStatus.CREATED);
+        ctx.result("Successfully registered!");
     }
     //TODO
     public void update(){

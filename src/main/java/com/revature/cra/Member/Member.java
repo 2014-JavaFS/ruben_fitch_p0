@@ -11,6 +11,10 @@ public class Member {
         STUDENT, FACULTY
     }
 
+    // No arg constructor used jackson
+    public Member(){
+    }
+
     public Member(int memberId, String firstName, String lastName, MemberType type, String password) {
         this.memberId = memberId;
         this.firstName = firstName;
