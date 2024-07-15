@@ -4,7 +4,7 @@ public class Course {
     // Fields
     private int courseId;
     private String subject;
-    private int courseNumber;
+    private short courseNumber;
     private String courseName;
     private String professor;
     private String description;
@@ -28,7 +28,7 @@ public class Course {
      * @param capacity - course's capacity
      * @param numRegistered - course's current number of registered students
      */
-    public Course(int courseId, String subject, int courseNumber, String courseName, String professor, String description, short capacity, short numRegistered) {
+    public Course(int courseId, String subject, short courseNumber, String courseName, String professor, String description, short capacity, short numRegistered) {
         this.courseId = courseId;
         this.subject = subject;
         this.courseNumber = courseNumber;
@@ -57,11 +57,11 @@ public class Course {
         this.subject = subject;
     }
 
-    public int getCourseNumber() {
+    public short getCourseNumber() {
         return courseNumber;
     }
 
-    public void setCourseNumber(int courseNumber) {
+    public void setCourseNumber(short courseNumber) {
         this.courseNumber = courseNumber;
     }
 

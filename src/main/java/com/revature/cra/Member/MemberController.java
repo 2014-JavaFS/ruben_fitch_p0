@@ -18,11 +18,11 @@ public class MemberController {
         app.post("/members",this::register);
     }
 
+    //TODO: Handle the error for member.setType(memberType.getClass());
     public void register(Context ctx) throws InvalidInputException {
         // Request
         Member member = ctx.bodyAsClass(Member.class);
-        Member.MemberType memberType = Member.MemberType.valueOf("STUDENT");
-        member.setType(memberType);
+        member.setType("STUDENT");
         memberService.create(member);
         // Responses
         ctx.status(HttpStatus.CREATED);
