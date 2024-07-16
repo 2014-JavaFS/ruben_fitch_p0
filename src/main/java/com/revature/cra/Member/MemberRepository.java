@@ -14,32 +14,62 @@ import java.util.List;
 
 public class MemberRepository implements Crudable<Member> {
 
+    /**
+     * TODO: Implement
+     * @param updatedMember
+     * @return
+     */
     @Override
-    public boolean update(Member updatedObject) {
+    public boolean update(Member updatedMember) {
         return false;
     }
 
+    /**
+     * TODO: Implement
+     * @param removedMember
+     * @return
+     */
     @Override
-    public boolean delete(Member removedObject) {
+    public boolean delete(Member removedMember) {
         return false;
     }
 
+    /**
+     * TODO: Implement
+     * @return
+     */
     @Override
     public List<Member> findAll() {
         return new ArrayList<>();
     }
 
+    /**
+     * TODO: Implement
+     * @param newMember
+     * @return
+     * @throws InvalidInputException
+     */
     @Override
     public Member create(Member newMember) throws InvalidInputException {
         return null;
     }
 
+    /**
+     * TODO: Implement
+     * @param number
+     * @return
+     */
     @Override
     public Member findById(int number) {
         return null;
     }
 
-    //TODO: implement method
+    /**
+     * TODO: Description
+     * @param id
+     * @param password
+     * @return
+     */
     public Member findByIdAndPassword(int id, String password){
         try(Connection connection = ConnectionFactory.getConnectionFactory().getConnection()) {
             String sql = "select * from members where member_id = ? and password = ?";

@@ -2,6 +2,7 @@ package com.revature.cra.Course;
 
 import com.revature.cra.util.ConnectionFactory;
 import com.revature.cra.util.Interfaces.Crudable;
+import com.revature.cra.util.exceptions.DataNotFoundException;
 import com.revature.cra.util.exceptions.InvalidInputException;
 
 import java.sql.Connection;
@@ -10,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+// TODO: Implement logger
+// import static com.revature.cra.CourseRegistrationFrontController.logger;
 
 /**
  * Course repository follows the Data Access Object (DAO) pattern
@@ -98,13 +102,37 @@ public class CourseRepository implements Crudable<Course> {
 
     /**
      * TODO: Description
-     * @param newObject
+     * @param newCourse
      * @return
      * @throws InvalidInputException
      */
     @Override
-    public Course create(Course newObject) throws InvalidInputException {
-        return null;
+    public Course create(Course newCourse) throws InvalidInputException {
+        try(Connection conn = ConnectionFactory.getConnectionFactory().getConnection()) {
+            String sql = "insert into courses(subject, course_number, course_name, professor, description, capacity, num_registered) values (?,?,?,?,?,?,?) ";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, newCourse.getSubject());
+            preparedStatement.setShort(2, newCourse.getCourseNumber());
+            preparedStatement.setString(3, newCourse.getCourseName());
+            preparedStatement.setString(4, newCourse.getProfessor());
+            preparedStatement.setString(5, newCourse.getDescription());
+            preparedStatement.setShort(6, newCourse.getCapacity());
+            preparedStatement.setShort(7, newCourse.getNumRegistered());
+            preparedStatement.setInt(8, newCourse.getCourseId());
+
+            // TODO: implement logger
+            //logger.info(preparedStatement.toString());
+            int checkInsert = preparedStatement.executeUpdate();
+            if(checkInsert == 0){
+                throw new RuntimeException("Course was not inserted into the database");
+            }
+            return newCourse;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -113,8 +141,28 @@ public class CourseRepository implements Crudable<Course> {
      * @return
      */
     @Override
-    public Course findById(int number) {
-        return null;
+    public Course findById(int number) throws DataNotFoundException {
+        try (Connection conn = ConnectionFactory.getConnectionFactory().getConnection()){
+            //logger.info("Course number provided to the Repository be the service is {}", number);
+            String sql = "select * from courses where course_id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setInt(1, number);
+
+            //logger.info(preparedStatement.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.next()){
+                //logger.warn("Information not found within the database given course id {}", number);
+                throw new DataNotFoundException("No flight with that id " + number + " exists in our database.");
+            }
+            Course foundCourse = generateCourseFromResultSet(resultSet);
+            //logger.info("Sending back course information {}", foundCourse);
+            return foundCourse;
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
