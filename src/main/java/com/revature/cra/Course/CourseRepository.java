@@ -6,7 +6,9 @@ import com.revature.cra.util.exceptions.InvalidInputException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,21 +74,68 @@ public class CourseRepository implements Crudable<Course> {
         }
     }
 
-    //TODO: IMPLEMENT!
+    /**
+     * TODO: Description
+     * @return
+     */
     @Override
     public List<Course> findAll() {
-        return List.of();
+        try (Connection conn = ConnectionFactory.getConnectionFactory().getConnection()){
+            List<Course> courses = new ArrayList<>();
+            String sql = "select * from courses";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                courses.add(generateCourseFromResultSet(rs));
+            }
+
+            return courses;
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    //TODO: IMPLEMENT!
+    /**
+     * TODO: Description
+     * @param newObject
+     * @return
+     * @throws InvalidInputException
+     */
     @Override
     public Course create(Course newObject) throws InvalidInputException {
         return null;
     }
 
-    //TODO: IMPLEMENT!
+    /**
+     * TODO: Description
+     * @param number
+     * @return
+     */
     @Override
     public Course findById(int number) {
         return null;
+    }
+
+    /**
+     * TODO: Description
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
+    private Course generateCourseFromResultSet(ResultSet rs) throws SQLException{
+        Course course = new Course();
+
+        course.setCourseId(rs.getInt("course_id"));
+        course.setSubject(rs.getString("subject"));
+        course.setCourseNumber(rs.getShort("course_number"));
+        course.setCourseName(rs.getString("course_name"));
+        course.setProfessor(rs.getString("professor"));
+        course.setDescription(rs.getString("description"));
+        course.setCapacity(rs.getShort("capacity"));
+        course.setNumRegistered(rs.getShort("num_registered"));
+        course.setCourseId(rs.getInt("course_id"));
+
+        return course;
     }
 }
