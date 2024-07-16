@@ -9,6 +9,11 @@ import java.util.List;
 
 public class MemberService implements Serviceable<Member> {
     private List<Member> memberList = new ArrayList<>();
+    private MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public List<Member> findAll(){
