@@ -109,23 +109,24 @@ public class CourseRepository implements Crudable<Course> {
     @Override
     public Course create(Course newCourse) throws InvalidInputException {
         try(Connection conn = ConnectionFactory.getConnectionFactory().getConnection()) {
-            String sql = "insert into courses(subject, course_number, course_name, professor, description, capacity, num_registered) values (?,?,?,?,?,?,?) ";
+            String sql = "insert into courses(course_id, subject, course_number, course_name, professor, description, capacity, num_registered) values (?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
-            preparedStatement.setString(1, newCourse.getSubject());
-            preparedStatement.setShort(2, newCourse.getCourseNumber());
-            preparedStatement.setString(3, newCourse.getCourseName());
-            preparedStatement.setString(4, newCourse.getProfessor());
-            preparedStatement.setString(5, newCourse.getDescription());
-            preparedStatement.setShort(6, newCourse.getCapacity());
-            preparedStatement.setShort(7, newCourse.getNumRegistered());
-            preparedStatement.setInt(8, newCourse.getCourseId());
+            preparedStatement.setInt(1, newCourse.getCourseId());
+            preparedStatement.setString(2, newCourse.getSubject());
+            preparedStatement.setShort(3, newCourse.getCourseNumber());
+            preparedStatement.setString(4, newCourse.getCourseName());
+            preparedStatement.setString(5, newCourse.getProfessor());
+            preparedStatement.setString(6, newCourse.getDescription());
+            preparedStatement.setShort(7, newCourse.getCapacity());
+            preparedStatement.setShort(8, newCourse.getNumRegistered());
+
 
             // TODO: implement logger
             //logger.info(preparedStatement.toString());
             int checkInsert = preparedStatement.executeUpdate();
             if(checkInsert == 0){
-                throw new RuntimeException("Course was not inserted into the database");
+                throw new RuntimeException("Course was not inserted into the database.");
             }
             return newCourse;
 
