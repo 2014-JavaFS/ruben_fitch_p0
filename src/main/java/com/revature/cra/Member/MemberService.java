@@ -4,11 +4,9 @@ import com.revature.cra.util.Interfaces.Serviceable;
 import com.revature.cra.util.exceptions.InvalidInputException;
 import com.revature.cra.util.exceptions.DataNotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MemberService implements Serviceable<Member> {
-    private List<Member> memberList = new ArrayList<>();
     private MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository){
@@ -17,19 +15,19 @@ public class MemberService implements Serviceable<Member> {
 
     @Override
     public List<Member> findAll(){
-        return new ArrayList<>();
+        return memberRepository.findAll();
     }
 
     @Override
     public Member create(Member newMember) throws InvalidInputException {
-        memberList.add(newMember);
+        memberRepository.create(newMember);
         System.out.println(newMember);
         return newMember;
     }
 
     @Override
     public Member findById(int memberId) {
-        for (Member member: memberList){
+        for (Member member: memberRepository.findAll()){
             if (member.getMemberId() == memberId){
                 return member;
             }
@@ -47,7 +45,7 @@ public class MemberService implements Serviceable<Member> {
      * @return - Member object, null if not found
      */
     public Member findByMemberIdAndPassword(int memberId, String password){
-        for (Member member: memberList){
+        for (Member member: memberRepository.findAll()){
             if (member.getMemberId() == memberId && member.getPassword().equals(password)){
                 return member;
             }
@@ -63,9 +61,10 @@ public class MemberService implements Serviceable<Member> {
      * @throws DataNotFoundException - member not found within database
      */
     public void update(Member updatedMember) throws DataNotFoundException {
+        List<Member> memberList = memberRepository.findAll();
         for (int i = 0; i < memberList.size(); i++) {
             if (memberList.get(i).getMemberId() == updatedMember.getMemberId()){
-                memberList.set(i, updatedMember);
+                memberRepository.update(updatedMember);
                 return;
             }
         }
