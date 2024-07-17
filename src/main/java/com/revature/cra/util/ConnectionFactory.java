@@ -1,5 +1,7 @@
 package com.revature.cra.util;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,12 +12,16 @@ public class ConnectionFactory {
     private Properties properties = new Properties();
 
     private ConnectionFactory() {
-
+        try {
+            properties.load(new FileReader("src/main/resources/db.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     static {
         try {
-            Class.forName("org.postgres.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e){
             e.printStackTrace();
         }

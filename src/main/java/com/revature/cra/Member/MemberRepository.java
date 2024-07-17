@@ -5,10 +5,7 @@ import com.revature.cra.util.Interfaces.Crudable;
 import com.revature.cra.util.exceptions.DataNotFoundException;
 import com.revature.cra.util.exceptions.InvalidInputException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,14 +96,14 @@ public class MemberRepository implements Crudable<Member> {
     @Override
     public Member create(Member newMember) throws InvalidInputException {
         try (Connection conn = ConnectionFactory.getConnectionFactory().getConnection()) {
-            String sql = "INSERT INTO members(member_id, first_name, last_name, type, password) VALUES(?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO members(first_name, last_name, member_type, password) VALUES(?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
-            preparedStatement.setInt(1, newMember.getMemberId());
-            preparedStatement.setString(2, newMember.getFirstName());
-            preparedStatement.setString(3, newMember.getLastName());
-            preparedStatement.setObject(4, newMember.getType());
-            preparedStatement.setString(5, newMember.getPassword());
+            //preparedStatement.setInt(1, newMember.getMemberId());
+            preparedStatement.setString(1, newMember.getFirstName());
+            preparedStatement.setString(2, newMember.getLastName());
+            preparedStatement.setObject(3, newMember.getType().name(), Types.OTHER);
+            preparedStatement.setString(4, newMember.getPassword());
 
             int checkInsert = preparedStatement.executeUpdate();
             if (checkInsert == 0){

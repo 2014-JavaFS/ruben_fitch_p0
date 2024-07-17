@@ -18,6 +18,12 @@ public class MemberService implements Serviceable<Member> {
         return memberRepository.findAll();
     }
 
+    /**
+     * TODO: Description and Test
+     * @param newMember
+     * @return
+     * @throws InvalidInputException
+     */
     @Override
     public Member create(Member newMember) throws InvalidInputException {
         memberRepository.create(newMember);
@@ -25,6 +31,11 @@ public class MemberService implements Serviceable<Member> {
         return newMember;
     }
 
+    /**
+     * TODO: Description and Test
+     * @param memberId
+     * @return
+     */
     @Override
     public Member findById(int memberId) {
         for (Member member: memberRepository.findAll()){
