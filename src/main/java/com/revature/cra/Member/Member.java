@@ -8,7 +8,7 @@ public class Member {
     private String password;
 
     public enum MemberType {
-        STUDENT, FACULTY
+        STUDENT, PROFESSOR
     }
 
     // No arg constructor used jackson

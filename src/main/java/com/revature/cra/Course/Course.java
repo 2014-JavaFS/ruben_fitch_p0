@@ -6,7 +6,7 @@ public class Course {
     private String subject;
     private short courseNumber;
     private String courseName;
-    private String professor;
+    private int professor;
     private String description;
     private short capacity;
     private short numRegistered;
@@ -28,7 +28,7 @@ public class Course {
      * @param capacity - course's capacity
      * @param numRegistered - course's current number of registered students
      */
-    public Course(int courseId, String subject, short courseNumber, String courseName, String professor, String description, short capacity, short numRegistered) {
+    public Course(int courseId, String subject, short courseNumber, String courseName, int professor, String description, short capacity, short numRegistered) {
         this.courseId = courseId;
         this.subject = subject;
         this.courseNumber = courseNumber;
@@ -73,11 +73,11 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public String getProfessor() {
+    public int getProfessor() {
         return professor;
     }
 
-    public void setProfessor(String professor) {
+    public void setProfessor(int professor) {
         this.professor = professor;
     }
 
@@ -121,10 +121,4 @@ public class Course {
 
     // Custom Methods
     // TODO: More custom methods
-    public boolean isFull(){
-        if (numRegistered < capacity){
-            return true;
-        }
-        return false;
-    }
 }

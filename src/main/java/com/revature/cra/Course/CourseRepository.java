@@ -34,7 +34,7 @@ public class CourseRepository implements Crudable<Course> {
             preparedStatement.setString(1, updatedCourse.getSubject());
             preparedStatement.setShort(2, updatedCourse.getCourseNumber());
             preparedStatement.setString(3, updatedCourse.getCourseName());
-            preparedStatement.setString(4, updatedCourse.getProfessor());
+            preparedStatement.setInt(4, updatedCourse.getProfessor());
             preparedStatement.setString(5, updatedCourse.getDescription());
             preparedStatement.setShort(6, updatedCourse.getCapacity());
             preparedStatement.setShort(7, updatedCourse.getNumRegistered());
@@ -109,14 +109,14 @@ public class CourseRepository implements Crudable<Course> {
     @Override
     public Course create(Course newCourse) throws InvalidInputException {
         try(Connection conn = ConnectionFactory.getConnectionFactory().getConnection()) {
-            String sql = "insert into courses(course_id, subject, course_number, course_name, professor, description, capacity, num_registered) values (?,?,?,?,?,?,?)";
+            String sql = "insert into courses(course_id, subject, course_number, course_name, professor, description, capacity, num_registered) values (?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             preparedStatement.setInt(1, newCourse.getCourseId());
             preparedStatement.setString(2, newCourse.getSubject());
             preparedStatement.setShort(3, newCourse.getCourseNumber());
             preparedStatement.setString(4, newCourse.getCourseName());
-            preparedStatement.setString(5, newCourse.getProfessor());
+            preparedStatement.setInt(5, newCourse.getProfessor());
             preparedStatement.setString(6, newCourse.getDescription());
             preparedStatement.setShort(7, newCourse.getCapacity());
             preparedStatement.setShort(8, newCourse.getNumRegistered());
@@ -179,7 +179,7 @@ public class CourseRepository implements Crudable<Course> {
         course.setSubject(rs.getString("subject"));
         course.setCourseNumber(rs.getShort("course_number"));
         course.setCourseName(rs.getString("course_name"));
-        course.setProfessor(rs.getString("professor"));
+        course.setProfessor(rs.getInt("professor"));
         course.setDescription(rs.getString("description"));
         course.setCapacity(rs.getShort("capacity"));
         course.setNumRegistered(rs.getShort("num_registered"));
