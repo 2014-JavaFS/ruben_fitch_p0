@@ -99,7 +99,6 @@ public class MemberRepository implements Crudable<Member> {
             String sql = "INSERT INTO members(first_name, last_name, member_type, password) VALUES(?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
-            //preparedStatement.setInt(1, newMember.getMemberId());
             preparedStatement.setString(1, newMember.getFirstName());
             preparedStatement.setString(2, newMember.getLastName());
             preparedStatement.setObject(3, newMember.getType().name(), Types.OTHER);
