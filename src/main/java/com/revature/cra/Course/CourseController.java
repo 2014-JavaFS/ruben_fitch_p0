@@ -77,11 +77,4 @@ public class CourseController implements Controller {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
 }
