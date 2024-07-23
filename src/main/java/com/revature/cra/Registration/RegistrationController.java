@@ -32,6 +32,14 @@ public class RegistrationController implements Controller {
     }
 
     /**
+     * TODO: Implement
+     * @param ctx
+     */
+    private void deleteRegistration(Context ctx) {
+
+    }
+
+    /**
      *
      * @param ctx
      */
